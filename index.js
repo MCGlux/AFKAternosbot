@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
       <head>
-        <title>${config.name} Dashboard</title>
+        <title>${config.name} Panel de control</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" media="print" onload="this.media='all'"
@@ -143,8 +143,8 @@ app.get('/', (req, res) => {
         <main role="main" aria-label="AFK Bot Dashboard">
 
           <header>
-            <h1>AFK Bot Dashboard</h1>
-            <p>Minecraft server bot &middot; Live status</p>
+            <h1>Panel de control</h1>
+            <p>Bot de Minecraft &middot; Estado en directo</p>
           </header>
 
           <section
@@ -164,36 +164,36 @@ app.get('/', (req, res) => {
           <section aria-label="Bot statistics">
             <dl>
               <div class="stat-card">
-                <dt>Uptime</dt>
+                <dt>Tiempo conectado</dt>
                 <dd id="uptime-text">—</dd>
-                <p class="stat-detail">Time since last connection</p>
+                <p class="stat-detail">Desde el último reinicio</p>
               </div>
               <div class="stat-card">
-                <dt>Coordinates</dt>
-                <dd id="coords-text">Searching…</dd>
-                <p class="stat-detail">Bot's current in-game position</p>
+                <dt>Coordenadas</dt>
+                <dd id="coords-text">Buscando…</dd>
+                <p class="stat-detail">Coordenadas actuales en el juego</p>
               </div>
               <div class="stat-card">
-                <dt>Server address</dt>
+                <dt>IP Servidor</dt>
                 <dd>${config.server.ip}</dd>
-                <p class="stat-detail">Minecraft server hostname</p>
+                <p class="stat-detail">Dirección actual del bot</p>
               </div>
             </dl>
           </section>
 
           <section class="controls" aria-label="Bot controls">
             <div class="btn-grid btn-grid-2">
-              <button class="btn-primary btn-start" onclick="startBot()" aria-label="Start bot">Start bot</button>
-              <button class="btn-primary btn-stop" onclick="stopBot()" aria-label="Stop bot">Stop bot</button>
+              <button class="btn-primary btn-start" onclick="startBot()" aria-label="Start bot">Iniciar bot</button>
+              <button class="btn-primary btn-stop" onclick="stopBot()" aria-label="Stop bot">Parar bot</button>
             </div>
             <div class="btn-grid btn-grid-2">
-              <a href="/tutorial" class="btn-secondary" aria-label="View setup guide">Setup guide</a>
-              <a href="/logs" class="btn-secondary" aria-label="View bot logs">View logs</a>
+              <a href="/tutorial" class="btn-secondary" aria-label="View setup guide">Guía de instalación</a>
+              <a href="/logs" class="btn-secondary" aria-label="View bot logs">Ver entradas de registro</a>
             </div>
           </section>
 
           <footer>
-            <p>Status updates every 5 seconds</p>
+            <p>El estado del bot se actualiza cada 5 segundos</p>
           </footer>
 
         </main>
@@ -223,8 +223,8 @@ app.get('/', (req, res) => {
               icon.className    = 'status-icon '    + (online ? 'online' : 'offline');
               icon.textContent  = online ? '✓' : '✗';
               label.className   = 'status-label '   + (online ? 'online' : 'offline');
-              label.textContent = online ? 'Connected' : 'Disconnected';
-              detail.textContent = online ? 'Bot is active on the server' : 'Attempting to reconnect';
+              label.textContent = online ? 'Conectado' : 'Disconectado';
+              detail.textContent = online ? 'El bot está activo en el servidor' : 'Intentando volver a conectar';
 
               document.getElementById('uptime-text').textContent = formatUptime(data.uptime);
 
@@ -234,26 +234,26 @@ app.get('/', (req, res) => {
                 const z = Math.floor(data.coords.z);
                 document.getElementById('coords-text').textContent = 'X ' + x + ', Y ' + y + ', Z ' + z;
               } else {
-                document.getElementById('coords-text').textContent = 'Searching…';
+                document.getElementById('coords-text').textContent = 'Buscando…';
               }
             } catch (e) {
               const label = document.getElementById('status-label');
               label.className = 'status-label offline';
-              label.textContent = 'Unreachable';
+              label.textContent = 'Inaccesible';
             }
           }
 
           async function startBot() {
             const r = await fetch('/start', { method: 'POST' });
             const data = await r.json();
-            alert(data.success ? 'Bot started!' : data.msg);
+            alert(data.success ? 'Bot iniciado!' : data.msg);
             update();
           }
 
           async function stopBot() {
             const r = await fetch('/stop', { method: 'POST' });
             const data = await r.json();
-            alert(data.success ? 'Bot stopped!' : data.msg);
+            alert(data.success ? 'Bot parado!' : data.msg);
             update();
           }
 
@@ -409,7 +409,7 @@ app.get("/tutorial", (req, res) => {
       </head>
       <body>
         <main>
-          <a href="/" class="back-btn">&#8592; Back to Dashboard</a>
+          <a href="/" class="back-btn">&#8592; Volver al Panel de control</a>
 
           <header>
             <h1>Setup Guide</h1>
@@ -455,7 +455,7 @@ app.get("/tutorial", (req, res) => {
           </div>
 
           <footer>
-            <p>AFK Bot Dashboard &middot; ${config.name}</p>
+            <p>Panel de control &middot; ${config.name}</p>
           </footer>
         </main>
       </body>
@@ -498,7 +498,7 @@ app.get("/logs", (req, res) => {
     <!DOCTYPE html>
     <html lang="en">
       <head>
-        <title>${config.name} - Logs</title>
+        <title>${config.name} - Registro</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" media="print" onload="this.media='all'"
@@ -741,12 +741,12 @@ app.get("/logs", (req, res) => {
       </head>
       <body>
         <main>
-          <a href="/" class="back-btn">&#8592; Back to Dashboard</a>
+          <a href="/" class="back-btn">&#8592; Volver al panel de control</a>
 
           <div class="page-header">
             <div class="page-header-left">
-              <h1>Bot Logs</h1>
-              <p>Live output from the AFK bot</p>
+              <h1>Registro del bot</h1>
+              <p>Salida en directo del bot AFK</p>
             </div>
             <span class="badge">${logCount} ${logCount === 1 ? "entry" : "entries"}</span>
           </div>
@@ -760,7 +760,7 @@ app.get("/logs", (req, res) => {
             </div>
             <div class="log-body" id="log-body">
               ${logCount === 0
-                ? `<div class="empty-state">No log entries yet. Start the bot to see output.</div>`
+                ? `<div class="empty-state">Aún no hay entradas en el registro. Inicia el bot para ver resultados.</div>`
                 : logs.map((l) => {
                     const escaped = escapeHTML(l);
                     const lower = l.toLowerCase();
@@ -781,7 +781,7 @@ app.get("/logs", (req, res) => {
                   id="console-input"
                   class="console-input"
                   type="text"
-                  placeholder="Type / for commands, or any message…"
+                  placeholder="Escribe / para ver los comandos o cualquier mensaje…"
                   autocomplete="off"
                   spellcheck="false"
                 >
@@ -792,11 +792,11 @@ app.get("/logs", (req, res) => {
 
           <div class="refresh-bar">
             <span class="refresh-dot"></span>
-            <span id="refresh-label">Auto-refreshing every 5 seconds</span>
+            <span id="refresh-label">Actualización automática cada 5 segundos</span>
           </div>
 
           <footer>
-            <p>AFK Bot Dashboard &middot; ${config.name}</p>
+            <p>Panel de control &middot; ${config.name}</p>
           </footer>
         </main>
 
@@ -812,11 +812,11 @@ app.get("/logs", (req, res) => {
             var activeIdx = -1;
 
             var COMMANDS = [
-              { name: '/help',   desc: 'Show all available commands' },
-              { name: '/pos',    desc: "Show bot's current coordinates" },
-              { name: '/status', desc: 'Show connection status & uptime' },
-              { name: '/list',   desc: 'List players on the server' },
-              { name: '/say',    desc: 'Send a chat message in-game' },
+              { name: '/help',   desc: 'Mostrar todos los comandos disponibles' },
+              { name: '/pos',    desc: "Mostrar las coordenadas actuales del bot" },
+              { name: '/status', desc: 'Mostrar el estado de la conexión y el tiempo de actividad' },
+              { name: '/list',   desc: 'Mostrar los jugadores del servidor' },
+              { name: '/say',    desc: 'Envía un mensaje por el chat del juego' },
             ];
 
             function scrollBottom() {
@@ -953,13 +953,13 @@ app.get("/logs", (req, res) => {
             input.addEventListener('focus', function() {
               typing = true;
               clearTimeout(refreshTimer);
-              label.textContent = 'Auto-refresh paused while typing';
+              label.textContent = 'La actualización automática se ha pausado mientras escribes';
             });
             input.addEventListener('blur', function() {
               setTimeout(function() {
                 hideSuggestions();
                 typing = false;
-                label.textContent = 'Auto-refreshing every 5 seconds';
+                label.textContent = 'Actualización automática cada 5 segundos';
                 scheduleRefresh();
               }, 150);
             });
@@ -976,7 +976,7 @@ app.get("/logs", (req, res) => {
 let botRunning = true;
 
 app.post("/start", (req, res) => {
-  if (botRunning) return res.json({ success: false, msg: "Already running" });
+  if (botRunning) return res.json({ success: false, msg: "El bot ya se encuentra en marcha" });
 
   botRunning = true;
   createBot();
@@ -986,7 +986,7 @@ app.post("/start", (req, res) => {
 });
 
 app.post("/stop", (req, res) => {
-  if (!botRunning) return res.json({ success: false, msg: "Already stopped" });
+  if (!botRunning) return res.json({ success: false, msg: "El bot ya se encuentra parado" });
 
   botRunning = false;
 
@@ -996,7 +996,7 @@ app.post("/stop", (req, res) => {
   }
 
   clearAllIntervals();
-  addLog("[Control] Bot stopped");
+  addLog("[Control] Bot parado");
 
   res.json({ success: true });
 });
@@ -1025,34 +1025,34 @@ app.post("/command", express.json(), (req, res) => {
   if (cmd === "/pos" || cmd === "/coords") {
     const pos = bot && bot.entity ? bot.entity.position : null;
     const msg = pos
-      ? `Position: X=${Math.floor(pos.x)}  Y=${Math.floor(pos.y)}  Z=${Math.floor(pos.z)}`
-      : "Position unavailable (bot not spawned).";
+      ? `Posicion: X=${Math.floor(pos.x)}  Y=${Math.floor(pos.y)}  Z=${Math.floor(pos.z)}`
+      : "Posicion no disponible (el bot no se ha generado).";
     addLog(`[Console] ${msg}`);
     return res.json({ success: true, msg });
   }
 
   if (cmd === "/status") {
-    const status = botState.connected ? "Connected" : "Disconnected";
+    const status = botState.connected ? "Conectado" : "Desconectad";
     const uptime = Math.floor((Date.now() - botState.startTime) / 1000);
-    const msg = `Status: ${status} | Uptime: ${uptime}s | Reconnects: ${botState.reconnectAttempts}`;
+    const msg = `Estado: ${status} | Inicio: ${uptime}s | Reconnects: ${botState.reconnectAttempts}`;
     addLog(`[Console] ${msg}`);
     return res.json({ success: true, msg });
   }
 
   if (!bot || typeof bot.chat !== "function") {
     const msg = bot
-      ? "Bot is still connecting — try again in a moment."
-      : "Bot is not running.";
-    addLog(`[Console] ${msg}`);
+      ? "El bot sigue conectándose; inténtalo de nuevo dentro de un momento."
+      : "El bot no está en funcionamiento.";
+    addLog(`[Consola] ${msg}`);
     return res.json({ success: false, msg });
   }
 
   try {
     bot.chat(cmd);
-    addLog(`[Console] Sent to server: ${cmd}`);
+    addLog(`[Consola] Enviando al servidor: ${cmd}`);
     return res.json({ success: true, msg: `Sent: ${cmd}` });
   } catch (err) {
-    addLog(`[Console] Error: ${err.message}`);
+    addLog(`[Consola] Error: ${err.message}`);
     return res.json({ success: false, msg: err.message });
   }
 });
@@ -1063,15 +1063,15 @@ app.post("/command", express.json(), (req, res) => {
 
 // FIX: handle port conflict gracefully - try next port if taken
 const server = app.listen(PORT, "0.0.0.0", () => {
-  addLog(`[Server] HTTP server started on port ${server.address().port} `);
+  addLog(`[Servidor] El servidor HTTP se ha iniciado en el puerto ${server.address().port} `);
 });
 server.on("error", (err) => {
   if (err.code === "EADDRINUSE") {
     const fallbackPort = PORT + 1;
-    addLog(`[Server] Port ${PORT} in use - trying port ${fallbackPort} `);
+    addLog(`[Servidor] Puerto ${PORT} en uso - probando el puerto ${fallbackPort} `);
     server.listen(fallbackPort, "0.0.0.0");
   } else {
-    addLog(`[Server] HTTP server error: ${err.message} `);
+    addLog(`[Servidor] Error del servidor HTTP: ${err.message} `);
   }
 });
 
@@ -1093,7 +1093,7 @@ function startSelfPing() {
   const renderUrl = process.env.RENDER_EXTERNAL_URL;
   if (!renderUrl) {
     addLog(
-      "[KeepAlive] No RENDER_EXTERNAL_URL set - self-ping disabled (running locally)",
+      "[KeepAlive] No se ha definido RENDER_EXTERNAL_URL: ping automático desactivado (ejecución local)",
     );
     return;
   }
@@ -1104,10 +1104,10 @@ function startSelfPing() {
         // Silent success
       })
       .on("error", (err) => {
-        addLog(`[KeepAlive] Self-ping failed: ${err.message}`);
+        addLog(`[KeepAlive] Error en el auto-ping: ${err.message}`);
       });
   }, SELF_PING_INTERVAL);
-  addLog("[KeepAlive] Self-ping system started (every 10 min)");
+  addLog("[KeepAlive] Sistema de auto-ping iniciado (cada 10 minutos)");
 }
 
 startSelfPing();
@@ -1119,7 +1119,7 @@ setInterval(
   () => {
     const mem = process.memoryUsage();
     const heapMB = (mem.heapUsed / 1024 / 1024).toFixed(2);
-    addLog(`[Memory] Heap: ${heapMB} MB`);
+    addLog(`[Memoria] Pila: ${heapMB} MB`);
   },
   5 * 60 * 1000,
 );
@@ -1152,7 +1152,7 @@ let lastDiscordSend = 0;
 const DISCORD_RATE_LIMIT_MS = 5000; // min 5s between webhook calls
 
 function clearAllIntervals() {
-  addLog(`[Cleanup] Clearing ${activeIntervals.length} intervals`);
+  addLog(`[Limpieza] Borrando ${activeIntervals.length} intervalos`);
   activeIntervals.forEach((id) => clearInterval(id));
   activeIntervals = [];
 }
@@ -1168,7 +1168,7 @@ function getReconnectDelay() {
     botState.wasThrottled = false;
     const throttleDelay = 60000 + Math.floor(Math.random() * 60000);
     addLog(
-      `[Bot] Throttle detected - using extended delay: ${throttleDelay / 1000}s`,
+      `[Bot] Se ha detectado una limitación de velocidad: se está aplicando un retraso prolongado: ${throttleDelay / 1000}s`,
     );
     return throttleDelay;
   }
@@ -1186,7 +1186,7 @@ function getReconnectDelay() {
 
 function createBot() {
   if (isReconnecting) {
-    addLog("[Bot] Already reconnecting, skipping...");
+    addLog("[Bot] Ya me estoy volviendo a conectar, saltando...");
     return;
   }
 
@@ -1197,13 +1197,13 @@ function createBot() {
       bot.removeAllListeners();
       bot.end();
     } catch (e) {
-      addLog("[Cleanup] Error ending previous bot:", e.message);
+      addLog("[Limpieza] Error al cerrar el bot anterior:", e.message);
     }
     bot = null;
   }
 
-  addLog(`[Bot] Creating bot instance...`);
-  addLog(`[Bot] Connecting to ${config.server.ip}:${config.server.port}`);
+  addLog(`[Bot] Creando instancia del bot...`);
+  addLog(`[Bot] Conectando con ${config.server.ip}:${config.server.port}`);
 
   try {
     // FIX: use version:false to auto-detect server version so the bot can join any server.
@@ -1229,7 +1229,7 @@ function createBot() {
     clearBotTimeouts();
     connectionTimeoutId = setTimeout(() => {
       if (!botState.connected) {
-        addLog("[Bot] Connection timeout - no spawn received");
+        addLog("[Bot] Tiempo de espera de conexión agotado: no se ha recibido ningún spawn");
         try {
           bot.removeAllListeners();
           bot.end();
@@ -1255,7 +1255,7 @@ function createBot() {
       isReconnecting = false;
 
       addLog(
-        `[Bot] [+] Successfully spawned on server! (Version: ${bot.version})`,
+        `[Bot] [+] ¡Se ha iniciado correctamente en el servidor! (Versión: ${bot.version})`,
       );
       if (
         config.discord &&
@@ -1263,7 +1263,7 @@ function createBot() {
         config.discord.events.connect
       ) {
         sendDiscordWebhook(
-          `[+] **Connected** to \`${config.server.ip}\``,
+          `[+] **Conectado** a \`${config.server.ip}\``,
           0x4ade80,
         );
       }
@@ -1282,7 +1282,7 @@ function createBot() {
       setTimeout(() => {
         if (bot && botState.connected && config.server["try-creative"]) {
           bot.chat("/gamemode creative");
-          addLog("[INFO] Attempted to set creative mode (requires OP)");
+          addLog("[INFO] Se ha intentado activar el modo creativo (se requiere permiso OP)");
         }
       }, 3000);
 
@@ -1291,7 +1291,7 @@ function createBot() {
           message.includes("commands.gamemode.success.self") ||
           message.includes("Set own game mode to Creative Mode")
         ) {
-          addLog("[INFO] Bot is now in Creative Mode.");
+          addLog("[INFO] El bot está ahora en modo creativo.");
         }
       });
     });
@@ -1318,7 +1318,7 @@ function createBot() {
         reasonStr.includes("too fast")
       ) {
         addLog(
-          "[Bot] Throttle kick detected - will use extended reconnect delay",
+          "[Bot] Se ha detectado un bloqueo de velocidad; se aplicará un retraso de reconexión prolongado",
         );
         botState.wasThrottled = true;
       }
@@ -1328,14 +1328,14 @@ function createBot() {
         config.discord.events &&
         config.discord.events.disconnect
       ) {
-        sendDiscordWebhook(`[!] **Kicked**: ${kickReason}`, 0xff0000);
+        sendDiscordWebhook(`[!] **Expulsado**: ${kickReason}`, 0xff0000);
       }
       // NOTE: do NOT call scheduleReconnect() here - 'end' will fire right after 'kicked' and handle it
     });
 
     // FIX: 'end' is the single reconnect trigger
     bot.on("end", (reason) => {
-      addLog(`[Bot] Disconnected: ${reason || "Unknown reason"}`);
+      addLog(`[Bot] Desconectado: ${reason || "Unknown reason"}`);
       botState.connected = false;
       clearAllIntervals();
       spawnHandled = false; // reset for next connection
@@ -1346,7 +1346,7 @@ function createBot() {
         config.discord.events.disconnect
       ) {
         sendDiscordWebhook(
-          `[-] **Disconnected**: ${reason || "Unknown"}`,
+          `[-] **Desconectado**: ${reason || "Unknown"}`,
           0xf87171,
         );
       }
@@ -1362,7 +1362,7 @@ function createBot() {
       // Don't reconnect on error - let 'end' event handle it
     });
   } catch (err) {
-    addLog(`[Bot] Failed to create bot: ${err.message}`);
+    addLog(`[!][Bot] No se ha podido crear el bot: ${err.message}`);
     scheduleReconnect();
   }
 }
@@ -1372,7 +1372,7 @@ function scheduleReconnect() {
 
   // FIX: don't stack reconnect if already waiting
   if (isReconnecting) {
-    addLog("[Bot] Reconnect already scheduled, skipping duplicate.");
+    addLog("[Bot] La reconexión ya está programada; se omite el duplicado.");
     return;
   }
 
@@ -1381,7 +1381,7 @@ function scheduleReconnect() {
 
   const delay = getReconnectDelay();
   addLog(
-    `[Bot] Reconnecting in ${delay / 1000}s (attempt #${botState.reconnectAttempts})`,
+    `[Bot] Volviendo a conectarse en ${delay / 1000}s (Intento #${botState.reconnectAttempts})`,
   );
 
   reconnectTimeoutId = setTimeout(() => {
@@ -1395,7 +1395,7 @@ function scheduleReconnect() {
 // MODULE INITIALIZATION
 // ============================================================
 function initializeModules(bot, mcData, defaultMove) {
-  addLog("[Modules] Initializing all modules...");
+  addLog("[Módulos] Inicializando todos los módulos...");
 
   // ---------- AUTO AUTH (REACTIVE) ----------
   if (config.utils["auto-auth"] && config.utils["auto-auth"].enabled) {
@@ -1407,10 +1407,10 @@ function initializeModules(bot, mcData, defaultMove) {
       authHandled = true;
       if (type === "register") {
         bot.chat(`/register ${password} ${password}`);
-        addLog("[Auth] Detected register prompt - sent /register");
+        addLog("[Auth] Se ha detectado una solicitud de registro: se ha enviado /register");
       } else {
         bot.chat(`/login ${password}`);
-        addLog("[Auth] Detected login prompt - sent /login");
+        addLog("[Auth] Se ha detectado una solicitud de inicio de sesión: se ha enviado /login");
       }
     };
 
@@ -1436,7 +1436,7 @@ function initializeModules(bot, mcData, defaultMove) {
     setTimeout(() => {
       if (!authHandled && bot && botState.connected) {
         addLog(
-          "[Auth] No prompt detected after 10s, sending /login as failsafe",
+          "[Auth] No se ha detectado ninguna solicitud tras 10 segundos; enviando /login como medida de seguridad",
         );
         bot.chat(`/login ${password}`);
         authHandled = true;
@@ -1480,7 +1480,7 @@ function initializeModules(bot, mcData, defaultMove) {
     bot.pathfinder.setGoal(
       new GoalBlock(config.position.x, config.position.y, config.position.z),
     );
-    addLog("[Position] Navigating to configured position...");
+    addLog("[Posición] Navegando hacia la posición configurada...");
   }
 
   // ---------- ANTI-AFK ----------
@@ -1626,7 +1626,7 @@ function initializeModules(bot, mcData, defaultMove) {
     chatModule(bot);
   }
 
-  addLog("[Modules] All modules initialized!");
+  addLog("[Módulos] ¡Todos los módulos se han inicializado!");
 }
 
 // ============================================================
@@ -1835,7 +1835,7 @@ function bedModule(bot, mcData) {
           isTryingToSleep = true;
           try {
             await bot.sleep(bedBlock);
-            addLog("[Bed] Sleeping...");
+            addLog("[Cama] Durmiendo...");
           } catch (e) {
             // Can't sleep - maybe not night enough or monsters nearby
           } finally {
@@ -1845,7 +1845,7 @@ function bedModule(bot, mcData) {
       }
     } catch (e) {
       isTryingToSleep = false;
-      addLog("[Bed] Error:", e.message);
+      addLog("[Cama] Error:", e.message);
     }
   }, 10000);
 }
@@ -1895,7 +1895,7 @@ const rl = readline.createInterface({
 
 rl.on("line", (line) => {
   if (!bot || !botState.connected) {
-    addLog("[Console] Bot not connected");
+    addLog("[Consola] El bot no está conectado");
     return;
   }
 
@@ -1906,7 +1906,7 @@ rl.on("line", (line) => {
     bot.chat("/" + trimmed.slice(4));
   } else if (trimmed === "status") {
     addLog(
-      `Connected: ${botState.connected}, Uptime: ${formatUptime(Math.floor((Date.now() - botState.startTime) / 1000))}`,
+      `Conectado: ${botState.connected}, Inicio: ${formatUptime(Math.floor((Date.now() - botState.startTime) / 1000))}`,
     );
   } else {
     bot.chat(trimmed);
@@ -1930,7 +1930,7 @@ function sendDiscordWebhook(content, color = 0x0099ff) {
   // FIX: Discord rate limiting - skip if sent too recently
   const now = Date.now();
   if (now - lastDiscordSend < DISCORD_RATE_LIMIT_MS) {
-    addLog("[Discord] Rate limited - skipping webhook");
+    addLog("[Discord] Límite de frecuencia: se omite el webhook");
     return;
   }
   lastDiscordSend = now;
@@ -1998,7 +1998,7 @@ process.on("uncaughtException", (err) => {
     msg.includes("This socket has been ended");
 
   if (isNetworkError) {
-    addLog("[FATAL] Known network/protocol error - recovering gracefully...");
+    addLog("[FATAL] Error conocido de red/protocolo: se está recuperando de forma controlada...");
   }
 
   // ALWAYS recover — bot must never stay disconnected
@@ -2008,7 +2008,7 @@ process.on("uncaughtException", (err) => {
   // FIX: reset isReconnecting if it was stuck, then schedule reconnect
   if (isReconnecting) {
     addLog(
-      "[FATAL] isReconnecting was stuck - resetting before crash recovery",
+      "[FATAL] isReconnecting se había bloqueado; reinicio antes de la recuperación tras el fallo",
     );
     isReconnecting = false;
     // BUG FIX: was referencing non-existent 'reconnectTimeout' — correct name is 'reconnectTimeoutId'
@@ -2043,7 +2043,7 @@ process.on("unhandledRejection", (reason) => {
     msg.includes("PartialReadError");
 
   if (isNetworkError && !isReconnecting) {
-    addLog("[FATAL] Network rejection — triggering reconnect...");
+    addLog("[FATAL] Rechazo de la red: se inicia la reconexión...");
     clearAllIntervals();
     botState.connected = false;
     if (bot) {
@@ -2055,11 +2055,11 @@ process.on("unhandledRejection", (reason) => {
 });
 
 process.on("SIGTERM", () => {
-  addLog("[System] SIGTERM received — ignoring, bot will stay alive.");
+  addLog("[Sistema] Se ha recibido SIGTERM: se ignora; el bot seguirá activo.");
 });
 
 process.on("SIGINT", () => {
-  addLog("[System] SIGINT received — ignoring, bot will stay alive.");
+  addLog("[Sistema] Se ha recibido una señal SIGINT: se ignora; el bot seguirá activo.");
 });
 
 // =============================
@@ -2069,10 +2069,10 @@ process.on("SIGINT", () => {
 addLog("=".repeat(50));
 addLog("  Minecraft AFK Bot v2.5 - Bug-Fixed Edition");
 addLog("=".repeat(50));
-addLog(`Server: ${config.server.ip}:${config.server.port}`);
+addLog(`Servidor: ${config.server.ip}:${config.server.port}`);
 addLog(`Version: ${config.server.version}`);
 addLog(
-  `Auto-Reconnect: ${config.utils["auto-reconnect"] ? "Enabled" : "Disabled"}`,
+  `Auto-Reconnect: ${config.utils["auto-reconnect"] ? "Habilitado" : "Deshabilitado"}`,
 );
 addLog("=".repeat(50));
 
