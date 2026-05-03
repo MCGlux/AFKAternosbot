@@ -156,8 +156,8 @@ app.get('/', (req, res) => {
           >
             <div id="status-icon" aria-hidden="true" class="status-icon offline">&#x2717;</div>
             <div>
-              <div id="status-label" class="status-label offline">Connecting…</div>
-              <div id="status-detail" class="status-detail">Establishing connection</div>
+              <div id="status-label" class="status-label offline">Conectando…</div>
+              <div id="status-detail" class="status-detail">Estableciendo la conexión</div>
             </div>
           </section>
 
@@ -748,7 +748,7 @@ app.get("/logs", (req, res) => {
               <h1>Registro del bot</h1>
               <p>Salida en directo del bot AFK</p>
             </div>
-            <span class="badge">${logCount} ${logCount === 1 ? "entry" : "entries"}</span>
+            <span class="badge">${logCount} ${logCount === 1 ? "entry" : "entradas"}</span>
           </div>
 
           <div class="log-card">
@@ -785,7 +785,7 @@ app.get("/logs", (req, res) => {
                   autocomplete="off"
                   spellcheck="false"
                 >
-                <button id="console-send" class="console-send">Send</button>
+                <button id="console-send" class="console-send">Enviar</button>
               </div>
             </div>
           </div>
