@@ -1,13 +1,13 @@
 {
   "name": "AFK Bot",
   "bot-account": {
-    "username": "superknown",
+    "username": "TestBot",
     "password": "",
     "type": "offline"
   },
   "server": {
     "ip": "MCGlux2.aternos.me",
-    "port": 45891,
+    "port": 33295,
     "version": "",
     "try-creative": false
   },
