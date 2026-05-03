@@ -59,14 +59,14 @@ function setupLeaveRejoin(bot, createBot) {
         // Cap at 30s max
         delay = Math.min(delay, 15000)
 
-        logThrottled(`[AFK] Rejoin scheduled in ${Math.round(delay / 1000)}s (reason: ${reason}, attempt: ${reconnectAttempts})`)
+        logThrottled(`[AFK] Reincorporación prevista en ${Math.round(delay / 1000)}s (reason: ${reason}, intento: ${reconnectAttempts})`)
 
         reconnectTimer = setTimeout(() => {
             if (stopped) return
             try {
                 if (typeof createBot === 'function') createBot()
             } catch (e) {
-                console.log('[AFK] createBot error:', e?.message || e)
+                console.log('[AFK] Error de createBot:', e?.message || e)
                 scheduleReconnect('createBot-error')
             }
         }, delay)
@@ -84,13 +84,13 @@ function setupLeaveRejoin(bot, createBot) {
         // Stay connected 1-5 minutes before a scheduled leave/rejoin cycle.
         const stayTime = randomMs(60000, 300000)
 
-        logThrottled(`[AFK] Will leave in ${Math.round(stayTime / 1000)} seconds`)
+        logThrottled(`[AFK] Me voy en ${Math.round(stayTime / 1000)} segundos`)
 
         scheduleNextJump()
 
         leaveTimer = setTimeout(() => {
             if (stopped) return
-            logThrottled('[AFK] Leaving server (timer)')
+            logThrottled('[AFK] Abandonando servidor (timer)')
             cleanup()
             try {
                 bot.quit()
